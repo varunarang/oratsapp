@@ -1,3 +1,5 @@
+require 'syslog/logger'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -44,6 +46,10 @@ Rails.application.configure do
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
+
+  # Log to syslog.
+  config.log_tags = [ :subdomain, :uuid ]
+  config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new('oratsapp'))
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
